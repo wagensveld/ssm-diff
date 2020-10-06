@@ -250,7 +250,7 @@ class ParameterStore(object):
     def _read_param(self, value, ssm_type='String', name=None):
         if ssm_type == 'SecureString':
             description = self.ssm.describe_parameters(
-                Filters=[{
+                ParameterFilters=[{
                     'Key': 'Name',
                     'Values': [name]
                 }]
@@ -306,6 +306,7 @@ class ParameterStore(object):
     def prepare_param(self, name, value):
         kwargs = {
             'Name': name,
+            'Overwrite': True
         }
         if isinstance(value, list):
             kwargs['Type'] = 'StringList'
